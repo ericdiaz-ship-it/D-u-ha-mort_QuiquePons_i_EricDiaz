@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MovimentJugador : MonoBehaviour
 {
@@ -17,5 +18,13 @@ public class MovimentJugador : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         Vector3 direction = transform.right * horizontal + transform.forward * vertical;
         controller.Move(direction * speed * Time.deltaTime);
+    }
+     private void OnTriggerEnter(Collider objecteTocat)
+    {
+        if (objecteTocat.tag == "Finish")
+        {
+            SceneManager.LoadScene("Fi"); 
+              Cursor.lockState = CursorLockMode.None;
+        }
     }
 }
