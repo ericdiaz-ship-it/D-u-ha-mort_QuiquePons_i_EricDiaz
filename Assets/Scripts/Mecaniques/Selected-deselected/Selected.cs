@@ -40,14 +40,14 @@ public class Selected : MonoBehaviour
     }
     void SelectedObject(Transform transform)
     {
-        transform.GetComponent<MeshRenderer>().material.color = Color.red;
+        //transform.GetComponent<MeshRenderer>().material.color = Color.red;
         ultimObjecte = transform.gameObject;
     }
     void DeselectedObject()
     {
         if (ultimObjecte)
         {
-            ultimObjecte.GetComponent<MeshRenderer>().material.color = Color.white;
+            //ultimObjecte.GetComponent<MeshRenderer>().material.color = Color.white;
             ultimObjecte = null;
         }
 

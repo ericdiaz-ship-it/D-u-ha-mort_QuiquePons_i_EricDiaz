@@ -1,18 +1,30 @@
 using UnityEngine;
 
-public class CambiarColor : MonoBehaviour, IInteractuable
+public class Cadenat : MonoBehaviour, IInteractuable
 {
-    private Renderer rend;
-
-    void Start()
-    {
-        rend = GetComponent<Renderer>();
-    }
-
+    public GameObject panel;
+  private bool isActive = false;
     public void Interactuar()
     {
-        Color nuevoColor = new Color(Random.value, Random.value, Random.value);
-        rend.material.color = nuevoColor;
-        Debug.Log($"{gameObject.name} cambió de color a {nuevoColor}");
+        ObrirPanel();
+    }
+    void Update()
+    {
+        // Cerrar el panel si está activo y se presiona Enter
+        if (isActive && Input.GetKeyDown(KeyCode.Return))
+        {
+            TancarPanel();
+        }
+    }
+    private void ObrirPanel()
+    {
+        panel.SetActive(true);
+        isActive = true;
+    }
+
+    private void TancarPanel()
+    {
+        panel.SetActive(false);
+        isActive = false;
     }
 }
