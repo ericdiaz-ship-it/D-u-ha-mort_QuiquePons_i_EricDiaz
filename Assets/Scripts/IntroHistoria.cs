@@ -5,7 +5,6 @@ using System.Collections;
 public class IntroHistoria : MonoBehaviour
 {
     public TextMeshProUGUI textoUI;
-
     public float velocidadEscritura = 0.03f;
 
     private int indice = 0;
@@ -35,7 +34,16 @@ public class IntroHistoria : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) // Enter o Return
+        // Saltar toda la historia con ESPACIO
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StopAllCoroutines();  // Detiene cualquier texto en curso
+            textoUI.text = "";    // Limpia el texto
+            gameObject.SetActive(false); // Oculta la historia
+        }
+
+        // Avanzar con ENTER
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (!mostrando)
             {
@@ -68,9 +76,7 @@ public class IntroHistoria : MonoBehaviour
 
     IEnumerator SalirDeIntro()
     {
-    
         yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
-
     }
 }

@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "D-u-ha-mort_QuiquePons_i_EricDiaz.sln"
+    "dotnet.defaultSolution": "Déu ha mort_QuiquePons_i_EricDiaz.sln"
 }
