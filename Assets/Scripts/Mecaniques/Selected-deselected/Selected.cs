@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Selected : MonoBehaviour
 {
     LayerMask mask;
-    public float distance = 1.5f;
+    public float distance = 20f;
     public Texture2D punter;
     public GameObject TextDetect;
     GameObject ultimObjecte = null;
@@ -26,26 +26,28 @@ public class Selected : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    hit.collider.transform.GetComponent<ObjetoInteractuar>().ActivarObjeto();
+                    hit.collider.transform.GetComponent<IInteractuable>().Interactuar();
                 }
             }
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
-        }else
+        }
+        else
         {
             DeselectedObject();
         }
+         TextDetect.SetActive(ultimObjecte != null);
 
     }
     void SelectedObject(Transform transform)
     {
-        transform.GetComponent<MeshRenderer>().material.color = Color.red;
+        //transform.GetComponent<MeshRenderer>().material.color = Color.red;
         ultimObjecte = transform.gameObject;
     }
     void DeselectedObject()
     {
         if (ultimObjecte)
         {
-            ultimObjecte.GetComponent<MeshRenderer>().material.color = Color.white;
+            //ultimObjecte.GetComponent<MeshRenderer>().material.color = Color.white;
             ultimObjecte = null;
         }
 
@@ -54,13 +56,5 @@ public class Selected : MonoBehaviour
     {
         Rect punterPos = new Rect(Screen.width / 2 , Screen.height / 2 , punter.width, punter.height   );
         GUI.DrawTexture(punterPos, punter);
-        if (ultimObjecte)
-        {
-            TextDetect.SetActive(true);
-        }
-        else
-        {
-            TextDetect.SetActive(false);
-        }
     }
 }
