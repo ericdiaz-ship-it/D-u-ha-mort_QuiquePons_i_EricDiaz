@@ -20,6 +20,7 @@ public class controlPuzzleFinal : MonoBehaviour
     {
         if (objectesRecollits.Count == objectesCorrectes.Length)
         {
+            MusicManager.instance.PlayFinalMusic();
             finalHistoria.IniciarHistoria();
         }
         else

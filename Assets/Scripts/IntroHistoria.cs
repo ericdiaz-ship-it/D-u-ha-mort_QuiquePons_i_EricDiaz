@@ -77,6 +77,7 @@ public class IntroHistoria : MonoBehaviour
     IEnumerator SalirDeIntro()
     {
         yield return new WaitForSeconds(0.5f);
+        MusicManager.instance.playGameplayMusic();
         gameObject.SetActive(false);
     }
 }
