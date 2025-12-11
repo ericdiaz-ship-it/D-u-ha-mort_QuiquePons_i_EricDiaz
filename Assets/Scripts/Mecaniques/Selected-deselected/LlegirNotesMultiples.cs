@@ -5,7 +5,7 @@ public class LlegirNotasMultiples : MonoBehaviour
 {
     [Header("UI del texto")]
     public GameObject panel;       // Panel del Canvas que contiene el texto
-    public TMP_Text textBox;       // Texto donde se mostrará título + contenido
+    public TextMeshProUGUI textBox;       // Texto donde se mostrará título + contenido
 
     [Header("Ajustes")]
     [Tooltip("Índice de la nota a mostrar al usar Interactuar() sin parámetro.")]

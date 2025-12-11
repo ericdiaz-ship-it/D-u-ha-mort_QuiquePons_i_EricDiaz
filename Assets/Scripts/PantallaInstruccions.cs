@@ -11,4 +11,10 @@ public class PantallaInstruccions : MonoBehaviour
     {
         panelInstruccions.SetActive(false);
     }
+    public void tancarContra()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+         panelInstruccions.SetActive(false);
+    }
 }
