@@ -5,6 +5,7 @@ using System.Collections;
 public class IntroHistoria : MonoBehaviour
 {
     public TextMeshProUGUI textoUI;
+    public TextMeshProUGUI hora;
     public float velocidadEscritura = 0.03f;
 
     private int indice = 0;
@@ -30,6 +31,7 @@ public class IntroHistoria : MonoBehaviour
     void Start()
     {
         textoUI.text = "";
+        hora.gameObject.SetActive(false);
     }
 
     void Update()
@@ -40,6 +42,7 @@ public class IntroHistoria : MonoBehaviour
             StopAllCoroutines();  // Detiene cualquier texto en curso
             textoUI.text = "";    // Limpia el texto
             gameObject.SetActive(false); // Oculta la historia
+            hora.gameObject.SetActive(true);
         }
 
         // Avanzar con ENTER
@@ -79,5 +82,6 @@ public class IntroHistoria : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         MusicManager.instance.playGameplayMusic();
         gameObject.SetActive(false);
+        hora.gameObject.SetActive(true);
     }
 }
