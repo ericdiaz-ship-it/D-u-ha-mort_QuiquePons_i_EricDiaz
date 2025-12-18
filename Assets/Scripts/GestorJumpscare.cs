@@ -29,9 +29,11 @@ public class GestorJumpscare : MonoBehaviour
 
         if (!estaSust && t >= properSusto)
         {
-           
-                StartCoroutine(FerJumpscare());
-            
+            float probabilidad = Random.Range(0f, 1f);
+            if (probabilidad < 0.15f) // 15% de probabilitat
+            {
+            StartCoroutine(FerJumpscare());
+            }
             properSusto = t + cooldownSusto;
         }
     }
