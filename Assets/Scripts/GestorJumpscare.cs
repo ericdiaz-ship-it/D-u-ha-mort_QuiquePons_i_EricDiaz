@@ -29,11 +29,9 @@ public class GestorJumpscare : MonoBehaviour
 
         if (!estaSust && t >= properSusto)
         {
-            float probabilitat = Random.value;
-            if (probabilitat < 0.15f)  // 15% de probabilitat → molt poc freqüent
-            {
+           
                 StartCoroutine(FerJumpscare());
-            }
+            
             properSusto = t + cooldownSusto;
         }
     }
