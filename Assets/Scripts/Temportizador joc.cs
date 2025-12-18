@@ -25,16 +25,16 @@ public class TemporitzadorJoc : MonoBehaviour
         }
 
         // 2. CANVI PROGRESSIU DE LA LLUM (de blanc a vermell en 28 minuts)
-        float t = Mathf.Clamp01(tempsTotal / (5f * 60f));
+        float t = Mathf.Clamp01(tempsTotal / (23f * 60f));
         llumLlanterna.color = Color.Lerp(Color.white, Color.red, t);
 
         // 3. CANVI D’HORA CADA 5 MINUTS
-        int horaActual = Mathf.FloorToInt(tempsTotal / (1 * 60));
+        int horaActual = Mathf.FloorToInt(tempsTotal / (5 * 60));
         horaActual = Mathf.Clamp(horaActual, 0, 6); // De 0 A.M a 6 A.M
         textHora.text = horaActual + " A.M";
 
         // 4. FER SONAR LA CAMPANA CADA 5 MINUTS
-        if (Mathf.Abs((tempsTotal % (1 * 60)) - 0) < Time.deltaTime)
+        if (Mathf.Abs((tempsTotal % (5 * 60)) - 0) < Time.deltaTime)
         {
             soCampana.Play();
         }

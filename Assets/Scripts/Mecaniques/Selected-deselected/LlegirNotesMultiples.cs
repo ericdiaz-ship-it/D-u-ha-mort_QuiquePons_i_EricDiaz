@@ -1,117 +1,124 @@
 using UnityEngine;
 using TMPro;
 
-public class LlegirNotasMultiples : MonoBehaviour
+public class LlegirNotesMultiples : MonoBehaviour, IInteractuable
 {
-    [Header("UI del texto")]
-    public GameObject panel;       // Panel del Canvas que contiene el texto
-    public TextMeshProUGUI textBox;       // Texto donde se mostrará título + contenido
+    [Header("UI del text")]
+    public GameObject panel;       // Panel del Canvas que conté el text
+    public TextMeshProUGUI textBox; // Text on es mostrarà títol + contingut
 
-    [Header("Ajustes")]
-    [Tooltip("Índice de la nota a mostrar al usar Interactuar() sin parámetro.")]
-    public int currentNoteIndex = 0;
-
+    private int currentNoteIndex = 0;
     private bool isActive = false;
 
-    // Títulos de las notas
     private readonly string[] titles = new string[]
     {
-        "El Murmullo de las Campanas Huecas (8 años)",
-        "El Libro que Susurra sin Voz (9 años)",
-        "El Pasillo que Respira (10 años)",
-        "Lo Que Espera en las Esquinas (11 años)",
-        "Las Voces Debajo del Suelo (12 años)",
-        "El Reflejo que No Era Yo (13 años)",
-        "Las Hermanas que Caminan Sin Ruido (14 años)",
-        "Cuando el Libro Se Abre Solo (15 años)",
-        "El Silencio del Padre (16 años)",
-        "El Convento que Se Cierra Sobre Nosotras (17 años)",
-        "La Palabra Prohibida (18 años)",
-        "El Final que No Me Pertenece (18 años, última entrada)"
+        "El Murmuri de les Campanes Buides (8 anys)",
+        "El Llibre que Xiuxiueja sense Veu (9 anys)",
+        "El Passadís que Respira (10 anys)",
+        "El que Espera a les Cantonades (11 anys)",
+        "Les Veus Sota el Sòl (12 anys)",
+        "El Reflex que No Era Jo (13 anys)",
+        "Les Germanes que Caminen Sense Soroll (14 anys)",
+        "Quan el Llibre S'obre Sol (15 anys)",
+        "El Silenci del Pare (16 anys)",
+        "El Convent que es Tanca Sobre Nosaltres (17 anys)",
+        "La Paraula Prohibida (18 anys)",
+        "El Final que No Em Pertany (18 anys, última entrada)"
     };
 
-    // Contenido de las notas
     private readonly string[] notes = new string[]
     {
-        @"Hoy desperté porque las campanas sonaban raro, como si alguien hubiese metido dentro un animalito que raspaba con las uñas para salir. No sé si las campanas pueden tener dentro algo vivo, pero me dio un poco de miedo pensar en ello. La Hermana Pilar me dijo que son ideas de niña, que las campanas siempre han sonado igual, y que quizá es el viento que se mete donde no toca.
-Mi hermana y yo limpiamos los bancos. Ella siempre limpia más rápido que yo. Cuando paso la mano por la madera, parece que tuviera frío, como si la madera no estuviera viva del todo.
-El Padre caminó por el pasillo y ni nos miró. Las hermanas se quedaron muy quietas, como estatuas de yeso, mientras él pasaba. Mi hermana me apretó la mano hasta que me dolió. No sé por qué. Creo que aquí hay cosas que solo entienden los mayores y que nunca nos explican.",
+        @"Avui m'he despertat perquè les campanes sonaven estrany, com si algú hagués ficat dins un animalet que ratllava amb les ungles per sortir. No sé si les campanes poden tenir dins alguna cosa viva, però em va fer una mica de por pensar-hi. La Germana Pilar em va dir que són idees de nena, que les campanes sempre han sonat igual, i que potser és el vent que es cola on no toca.
+La meva germana i jo netegem els bancs. Ella sempre neteja més ràpid que jo. Quan passo la mà per la fusta, sembla que tingués fred, com si la fusta no estigués del tot viva.
+El Pare va caminar pel passadís i ni ens va mirar. Les germanes es van quedar molt quietes, com estatuetes de guix, mentre ell passava. La meva germana em va prémer la mà fins que em va fer mal. No sé per què. Crec que aquí hi ha coses que només entenen els grans i que mai no ens expliquen.",
 
-        @"En la biblioteca vieja, donde casi no entra luz, encontré un libro sin letras en la tapa. Estaba escondido detrás de otros libros gordos, como un niño tímido que no quiere que lo encuentren. Cuando lo abrí, me pareció escuchar un susurro, pero no venía de afuera. Venía de dentro de mí, como si el libro hubiera despertado algo.
-Las páginas huelen a humedad, a cosas que estuvieron mucho tiempo dormidas. A veces creo que las letras cambian un poquito cuando no las estoy mirando directamente.
-La Hermana Inés dijo que estos libros “traen pensamientos torcidos”, pero no me explicó qué es un pensamiento torcido. Yo solo sentí curiosidad.
-Lo escondí bajo mi cama. Mi hermana no lo sabe. O eso creo.",
+        @"A la biblioteca antiga, on gairebé no entra llum, vaig trobar un llibre sense lletres a la tapa. Estava amagat darrere d'altres llibres grossos, com un nen tímid que no vol que el trobin. Quan el vaig obrir, em va semblar escoltar un xiuxiueig, però no venia de fora. Venia de dins meu, com si el llibre hagués despertat alguna cosa.
+Les pàgines fan olor d'humitat, de coses que han estat molt temps adormides. De vegades crec que les lletres canvien una mica quan no les miro directament.
+La Germana Inés va dir que aquests llibres “porten pensaments torçuts”, però no em va explicar què és un pensament torçat. Jo només vaig sentir curiositat.
+L'he amagat sota el llit. La meva germana no ho sap. O això crec.",
 
-        @"Hoy el convento estaba tan silencioso que parecía que alguien hubiera apagado los sonidos. Cuando regresaba del patio, tuve la impresión de que el pasillo respiraba, como si las paredes se movieran un poquito hacia afuera y luego hacia adentro, muy lento, muy profundo.
-No sé si fue un sueño despierta o si el convento realmente está vivo.
-Le conté a mi hermana. Ella me abrazó fuerte y dijo que era mi imaginación… pero lo dijo mirando hacia otro lado, con los labios blancos de tanto apretarlos. Creo que también tiene miedo, pero no quiere admitirlo.
-Yo tampoco lo admitiría si ella no existiera. Pero estamos juntas. Eso lo hace menos terrible.",
+        @"Avui el convent estava tan silenciós que semblava que algú hagués apagat els sons. Quan tornava del pati, vaig tenir la impressió que el passadís respirava, com si les parets es movessin una mica cap fora i després cap a dins, molt lent, molt profund.
+No sé si va ser un somni despert o si el convent realment està viu.
+Li vaig explicar a la meva germana. Ella em va abraçar fort i va dir que era la meva imaginació… però ho va dir mirant cap a un altre costat, amb els llavis blancs de tant prémer-los. Crec que també té por, però no vol admetre-ho.
+Jo tampoc no ho admetria si ella no existís. Però estem juntes. Això ho fa menys terrible.",
 
-        @"Hay algo en las esquinas. Lo sé. Hoy fui a buscar agua y justo antes de doblar un pasillo largo, vi una sombra quieta, como si estuviera esperándome. No se movió ni hizo nada. Solo estaba allí, negra y muy delgada.
-Cuando pasé la esquina, no había nada. Pero mi corazón latía tan fuerte que pensé que iba a escucharse por todo el convento.
-Tal vez los ojos ven cosas antes que la cabeza. O tal vez las cosas se esconden solo cuando se las quiere mirar de frente.",
+        @"Hi ha alguna cosa a les cantonades. Ho sé. Avui vaig anar a buscar aigua i just abans de girar un passadís llarg, vaig veure una ombra quieta, com si m'estigués esperant. No es va moure ni va fer res. Només hi era, negra i molt prima.
+Quan vaig passar la cantonada, no hi havia res. Però el meu cor bategava tan fort que vaig pensar que se sentiria per tot el convent.
+Potser els ulls veuen coses abans que el cap. O potser les coses s'amaguen només quan les vols mirar de front.",
 
-        @"Anoche escuché al Padre en su habitación. Era como un rezo, pero las palabras parecían hundirse en el suelo, como si las pronunciara dentro de un pozo muy profundo. No eran palabras que yo entendiera, ni siquiera parecían humanas.
-Esta mañana, la Hermana Lucía tenía los ojos hinchados. Dijo que había dormido mal, pero cuando lo dijo miró hacia la puerta del Padre y se tocó las manos, como si le dolieran aunque no se vieran heridas.
-Las monjas hoy hablaban más bajito que nunca. Incluso los pasos parecían más suaves, como si temieran despertar algo que duerme bajo los pisos.",
+        @"Anit vaig escoltar el Pare a la seva habitació. Era com un res, però les paraules semblaven enfonsar-se al terra, com si les pronunciés dins d'un pou molt profund. No eren paraules que entengués, ni tan sols semblaven humanes.
+Aquest matí, la Germana Lucía tenia els ulls inflats. Va dir que havia dormit malament, però quan ho va dir va mirar cap a la porta del Pare i es va tocar les mans, com si li dolguessin tot i que no es veiessin ferides.
+Les monges avui parlaven més baix que mai. Fins i tot els passos semblaven més suaus, com si temessin despertar alguna cosa que dorm sota els pisos.",
 
-        @"Mientras lavaba los platos, miré el agua quieta en el barreño. Mi reflejo estaba allí, pero no se movía igual que yo. Tenía los ojos un poco más abiertos, como si estuviera vigilándome. Y la boca entreabierta, como si quisiera avisarme de algo, pero no pudiera.
-Sacudí la cabeza y entonces sí volvió a moverse igual que yo, como un espejo normal.
-Mi hermana me encontró temblando y dijo que tengo la cabeza llena de fantasías por culpa del libro. Pero cuando tomó el barreño para vaciarlo, evitó mirarse en el agua. Eso lo vi clarísimo.
-Creo que ella también empieza a ver cosas, pero no quiere decírmelo.",
+        @"Mentre rentava els plats, vaig mirar l'aigua quieta al test. El meu reflex hi era, però no es movia igual que jo. Tenia els ulls una mica més oberts, com si m'estigués vigilant. I la boca entreoberta, com si volgués avisar-me de alguna cosa, però no pogués.
+Vaig sacsejar el cap i aleshores sí que va tornar a moure's igual que jo, com un mirall normal.
+La meva germana em va trobar tremolant i va dir que tinc el cap ple de fantasies per culpa del llibre. Però quan va agafar el test per buidar-lo, va evitar mirar-se a l'aigua. Això ho vaig veure claríssim.
+Crec que ella també comença a veure coses, però no vol dir-m'ho.",
 
-        @"Últimamente las hermanas se mueven como si flotaran. No oigo sus pasos. Solo aparecen a mi lado sin que me dé cuenta. Antes hablaban mientras hacían las tareas, pero ahora sus voces parecen esconderse.
-Hoy una hermana dejó caer un vaso y el Padre la miró. Solo eso: la miró. Pero ella apretó los labios y se puso muy pálida, como si un frío grande hubiera pasado por encima de ella.
-Me pregunto si aquí todas aprendemos, poco a poco, a no existir demasiado.",
+        @"Últimament les germanes es mouen com si flotessin. No sento els seus passos. Només apareixen al meu costat sense que m'adoni. Abans parlaven mentre feien les tasques, però ara les seves veus semblen amagar-se.
+Avui una germana va deixar caure un got i el Pare la va mirar. Només això: la va mirar. Però ella va prémer els llavis i es va posar molt pàl·lida, com si un fred gran hagués passat per sobre d'ella.
+Em pregunto si aquí totes aprenem, poc a poc, a no existir massa.",
 
-        @"El libro apareció abierto en mi cama, aunque yo lo había dejado cerrado y bajo la manta. Estaba en una página que no recuerdo haber leído. Tenía una frase subrayada con lápiz, un lápiz que yo nunca usé:
-“Lo que se esconde no desea seguir escondido.”
-Sentí un escalofrío tan fuerte que tuve que sentarme.
-Mi hermana dice que quizá una corriente de aire lo abrió. Pero aquí nunca hay corrientes de aire. Las ventanas apenas dejan pasar el sol.
-Creo que el libro sabe que queremos dejar de leerlo. Y no le gusta.",
+        @"El llibre va aparèixer obert al meu llit, tot i que jo l'havia deixat tancat i sota la manta. Estava en una pàgina que no recordo haver llegit. Tenia una frase subratllada amb llapis, un llapis que jo mai no havia fet servir:
+“Allò que s'amaga no vol seguir amagat.”
+Vaig sentir un escalfor tan fort que vaig haver de seure.
+La meva germana diu que potser una corrent d'aire el va obrir. Però aquí mai hi ha corrents d'aire. Les finestres gairebé no deixen passar el sol.
+Crec que el llibre sap que volem deixar de llegir-lo. I no li agrada.",
 
-        @"El Padre nos mira como si estuviéramos hechas de un material que no le gusta tocar. Pero aun así, cuando pasa entre nosotras, siento que cuenta algo, como si llevara un registro secreto: un, dos, tres, cuatro…
-Anoche escuché un golpe seco en su habitación. Después, un ruido que parecía un sollozo breve. Cuando bajamos a cenar, las hermanas estaban tan silenciosas que parecía que hubieran olvidado cómo se usan las palabras.
-Mi hermana se acercó a mí y me susurró: “Aquí pasan cosas.”
-Yo solo pude asentir.",
+        @"El Pare ens mira com si fóssim fetes d'un material que no li agrada tocar. Però tot i així, quan passa entre nosaltres, sento que compta alguna cosa, com si portés un registre secret: un, dos, tres, quatre…
+Anit vaig escoltar un cop sec a la seva habitació. Després, un soroll que semblava un solloç breu. Quan vam baixar a sopar, les germanes estaven tan silencioses que semblava que haguessin oblidat com s'usen les paraules.
+La meva germana es va acostar a mi i em va xiuxiuejar: “Aquí passen coses.”
+Jo només vaig poder assentir.",
 
-        @"Las sombras ya no se esconden. Caminan conmigo un rato y luego desaparecen. A veces las veo detrás de las columnas, pero cuando me acerco ya no están.
-Mi hermana quiere que nos vayamos. Dice que fuera hay aire que no aprieta el pecho, que fuera la gente respira sin miedo. Yo quiero creerlo, pero siento que si me alejo del convento, algo me seguirá.
-El libro pesa más que antes. Y cuando lo abro, las letras parecen querer escaparse de la página.",
+        @"Les ombres ja no s'amaguen. Caminen amb mi una estona i després desapareixen. De vegades les veig darrere de les columnes, però quan m'hi acosto ja no hi són.
+La meva germana vol que marxem. Diu que fora hi ha aire que no apreta el pit, que fora la gent respira sense por. Jo vull creure-ho, però sento que si m'allunyo del convent, alguna cosa em seguirà.
+El llibre pesa més que abans. I quan l'obro, les lletres semblen voler escapar-se de la pàgina.",
 
-        @"El libro tiene una página nueva. Antes no estaba. Juro que no. Está completamente blanca excepto por una frase escrita en tinta muy fina:
-“No crucéis la puerta.”
-No sé si se refiere a la puerta grande del convento o a otra puerta que aún no conozco… pero siento que no es una advertencia. Es una orden.
-Esta noche, mientras dormía, escuché mi nombre en el pasillo. Era una voz pequeña, como de un niño escondido detrás de un mueble. Cuando salí, no había nadie, pero el aire estaba frío como si hubiera pasado algo corriendo.
-Mi hermana prepara una bolsa. Yo también. Aunque mis manos tiemblan cuando toco la ropa.",
+        @"El llibre té una pàgina nova. Abans no hi era. Ho juro. Està completament blanca excepte per una frase escrita amb tinta molt fina:
+“No creueu la porta.”
+No sé si es refereix a la porta gran del convent o a una altra porta que encara no conec… però sento que no és un avís. És una ordre.
+Aquesta nit, mentre dormia, vaig escoltar el meu nom al passadís. Era una veu petita, com d'un nen amagat darrere d'un moble. Quan vaig sortir, no hi havia ningú, però l'aire estava fred com si hagués passat alguna cosa corrent.
+La meva germana prepara una bossa. Jo també. Tot i que les meves mans tremolen quan toco la roba.",
 
-        @"No sé si fue un sueño. Creo que no.
-Alguien se sentó en mi cama anoche. No escuché pasos. Solo sentí el colchón hundirse a los pies y luego una sombra que se inclinó hacia mí.
-No habló con voz. Habló dentro de mi cabeza, muy despacio, como si llevara años viviendo allí, esperando el momento.
-Me dijo que si me voy, el sufrimiento crecerá. Que yo soy la raíz que sostiene algo oscuro, algo que no pertenece del todo a este mundo.
-Me dijo que debía arrancarme para que todo termine.
-La palabra “arrancarme” me hizo llorar. No por el dolor, sino porque la sombra lo decía como si fuera un acto de amor hacia las demás.
-Voy a cerrar el libro. Voy a intentar dormir. Mañana nos iremos. Aunque siento un peso en el pecho, como si el convento me sujetara por dentro y no quisiera soltarme.
-Pero yo también tengo una hermana. Y sé que ella me necesita viva."
+        @"No sé si va ser un somni. Crec que no.
+Algú es va asseure al meu llit anit. No vaig sentir passos. Només vaig notar el matalàs enfonsar-se als peus i després una ombra que es va inclinar cap a mi.
+No va parlar amb veu. Va parlar dins del meu cap, molt lentament, com si hagués viscut anys allà, esperant el moment.
+Em va dir que si me'n vaig, el sofriment creixerà. Que jo sóc l'arrel que sosté alguna cosa fosca, alguna cosa que no pertany del tot a aquest món.
+Em va dir que havia d'arrencar-me per a que tot acabi.
+La paraula “arrencar-me” em va fer plorar. No pel dolor, sinó perquè l'ombra ho deia com si fos un acte d'amor cap a les altres.
+Tancaré el llibre. Intentaré dormir. Demà marxarem. Tot i que sento un pes al pit, com si el convent m'agafés per dins i no volgués deixar-me anar.
+Però jo també tinc una germana. I sé que ella em necessita viva."
     };
 
     void Update()
     {
-        if (isActive && Input.GetKeyDown(KeyCode.Return))
+        if (!isActive) return;
+
+        // Avançar a la següent nota amb Enter
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            currentNoteIndex++;
+            if (currentNoteIndex >= notes.Length)
+            {
+                TancarPanel();
+            }
+            else
+            {
+                MostrarNota(currentNoteIndex);
+            }
+        }
+        // Tancar amb Espai
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
             TancarPanel();
         }
     }
 
+    // Cridar quan s'interactua
     public void Interactuar()
     {
-        InteractuarNota(currentNoteIndex);
-    }
-
-    public void InteractuarNota(int index)
-    {
-        if (index < 0 || index >= notes.Length) return;
-        ObrirPanel(index);
+        currentNoteIndex = 0;
+        ObrirPanel(currentNoteIndex);
     }
 
     private void ObrirPanel(int index)
@@ -119,13 +126,14 @@ Pero yo también tengo una hermana. Y sé que ella me necesita viva."
         if (panel != null)
             panel.SetActive(true);
 
-        if (textBox != null)
-        {
-            // Combina título + salto de línea + contenido
-            textBox.text = $"<b>{titles[index]}</b>\n\n{notes[index]}";
-        }
-
+        MostrarNota(index);
         isActive = true;
+    }
+
+    private void MostrarNota(int index)
+    {
+        if (textBox != null)
+            textBox.text = $"<b>{titles[index]}</b>\n\n{notes[index]}";
     }
 
     private void TancarPanel()
@@ -134,5 +142,6 @@ Pero yo también tengo una hermana. Y sé que ella me necesita viva."
             panel.SetActive(false);
 
         isActive = false;
+        currentNoteIndex = 0;
     }
 }
